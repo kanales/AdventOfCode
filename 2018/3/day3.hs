@@ -57,7 +57,7 @@ freeSpace (r:rs) ar
           indices = [(k,j) | k <- [x..x+h-1], j <- [y..y+w-1]]
 
 part1 :: String -> String
-part1 = show . foldl1 (+) . fmap (\x -> if x== -1 then 1 else 0) . elems . overlappingMatrix . getRects
+part1 = show . foldl1 (\acc x-> if x == -1 then acc + 1 else acc) . elems . overlappingMatrix . getRects
 
 part2 :: String -> String
 part2 s = show $ freeSpace rs $ overlappingMatrix rs
