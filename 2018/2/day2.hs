@@ -1,4 +1,5 @@
 import Prelude hiding (replicate, elem)
+import System.Environment (getArgs)
 import Data.Vector (Vector, accum, replicate, elem)
 import qualified Data.Vector as Vector
 import Data.Char (ord, chr)

@@ -34,20 +34,6 @@ getRects = fmap parseRow . lines
 zeros :: (Int, Int) -> IntArray
 zeros (n,m) = array ((0,0),(n,m)) [((i,j),0) | i <- [0..n], j <- [0..m]]
 
--- overlappingMatrix :: [Rect] -> IntArray
--- overlappingMatrix rects = fun rects $ zeros (n,m)
---                     where (is,poss,sizs) = unzip3 rects
---                           (n,m) = (maxtups poss) `addTups` (maxtups sizs)
---                           fun []  ar    = ar
---                           fun (r:rs) ar = let (i,(x,y),(h,w)) = r
---                                         in fun rs $ ar // [
---                                             if ar!(k,j) == 0
---                                                 then ((k,j),i)
---                                                 else ((k,j),-1)
---                                             | k <- [x..x+h-1]
---                                             , j <- [y..y+w-1]
---                                             ]
-
 overlappingMatrix :: [Rect] -> IntArray
 overlappingMatrix rects = accumArray accFun 0 ((0,0),(n,m)) $ asoc rects
                     where (is,poss,sizs) = unzip3 rects

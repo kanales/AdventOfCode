@@ -1,0 +1,8 @@
+name:     AdventOfCode
+version:  1.0
+
+library
+  build-depends: 	base >= 4.7 && < 5
+                  , vector
+  exposed-modules: Foo
+  ghc-options:     -Wall
