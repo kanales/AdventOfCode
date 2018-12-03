@@ -31,9 +31,6 @@ addTups (a,b) (a',b') = (a+a', b+b')
 getRects :: String -> [Rect]
 getRects = fmap parseRow . lines
 
-zeros :: (Int, Int) -> IntArray
-zeros (n,m) = array ((0,0),(n,m)) [((i,j),0) | i <- [0..n], j <- [0..m]]
-
 overlappingMatrix :: [Rect] -> IntArray
 overlappingMatrix rects = accumArray accFun 0 ((0,0),(n,m)) $ asoc rects
                     where (is,poss,sizs) = unzip3 rects
@@ -43,11 +40,7 @@ overlappingMatrix rects = accumArray accFun 0 ((0,0),(n,m)) $ asoc rects
                             | otherwise = -1
 
 asoc :: [Rect] -> [((Int,Int),Int)]
-asoc = concat . f
-    where f []     = []
-          f (r:rs) = let (i,(x,y),(h,w)) = r
-                      in [((k,j),i) | k <- [x..x+h-1], j <- [y..y+w-1]]: (f rs)
-
+asoc = concatMap (\(i,(x,y),(h,w)) -> [((k,j),i) | k <- [x..x+h-1], j <- [y..y+w-1]])
 
 freeSpace :: [Rect] -> IntArray -> Int
 freeSpace (r:rs) ar 
