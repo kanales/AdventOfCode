@@ -25,13 +25,15 @@ mkPairs :: [a] -> [(a, a)]
 mkPairs [] = []
 mkPairs (x:xs) = fmap ((,) x) xs ++ mkPairs xs
 
-part1 :: String -> String
-part1 = show . combineTups . fmap (digestVector . hist 128 . fmap ord) . words
+part1 :: String -> Int
+part1 = combineTups . fmap (digestVector . hist 128 . fmap ord) . words
 
 part2 :: String -> String
-part2 = show . reverse . snd . head . filter ((==1) . fst) . fmap (uncurry similarity) . mkPairs . words
+part2 = reverse . snd . head . filter ((==1) . fst) . fmap (uncurry similarity) . mkPairs . words
 
 main = do 
-    arg <- head <$> getArgs
-    interact (case arg of "1" -> part1
-                          "2" -> part2)
+    stdin <- getContents
+    putStr "Part 1: "
+    print $ part1 stdin
+    putStr "Part 2: "
+    print $ part2 stdin

@@ -1,6 +1,5 @@
 import System.Environment (getArgs)
 import Data.Array.Unboxed
-import Debug.Trace (traceShow)
 
 type Rect = (Int,(Int,Int),(Int,Int))
 type IntArray = UArray (Int,Int) Int
@@ -49,14 +48,16 @@ freeSpace (r:rs) ar
     where (i,(x,y),(h,w)) = r
           indices = [(k,j) | k <- [x..x+h-1], j <- [y..y+w-1]]
 
-part1 :: String -> String
-part1 = show . foldl1 (\acc x-> if x == -1 then acc + 1 else acc) . elems . overlappingMatrix . getRects
+part1 :: [Rect] -> Int
+part1 = foldl1 (\acc x-> if x == -1 then acc + 1 else acc) . elems . overlappingMatrix
 
-part2 :: String -> String
-part2 s = show $ freeSpace rs $ overlappingMatrix rs
-    where rs = getRects s
+part2 :: [Rect] -> Int
+part2 rs = freeSpace rs $ overlappingMatrix rs
 
 main = do 
-    arg <- head <$> getArgs
-    interact (case arg of "1" -> part1
-                          "2" -> part2)
+    stdin <- getContents
+    let rects = getRects stdin
+    putStr "Part 1: "
+    print $ part1 rects
+    putStr "Part 2: "
+    print $ part2 rects

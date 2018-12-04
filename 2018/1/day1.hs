@@ -11,14 +11,16 @@ firstRepeated s (x:xs)
                 | x `member` s = x
                 | otherwise  = firstRepeated (insert x s) xs    
 
-part1 :: String -> String
-part1 = show . sum . parseInput
+part1 :: [Int] -> Int
+part1 = sum
 
-part2 :: String -> String
-part2 = show . firstRepeated empty  . scanl (\acc x -> acc + x) 0 . cycle . parseInput
+part2 :: [Int] -> Int
+part2 = firstRepeated empty  . scanl (\acc x -> acc + x) 0 . cycle
 
 main = do 
-    arg <- head <$> getArgs
-    interact (case arg of "1" -> part1
-                          "2" -> part2)
-    
+    stdin <- getContents
+    putStr "Part 1: "
+    let inpt = parseInput stdin
+    print $ part1 inpt
+    putStr "Part 2: "
+    print $ part2 inpt
