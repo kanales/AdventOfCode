@@ -19,8 +19,8 @@ part2 = firstRepeated empty  . scanl (\acc x -> acc + x) 0 . cycle
 
 main = do 
     stdin <- getContents
-    putStr "Part 1: "
     let inpt = parseInput stdin
+    putStr "Part 1: "
     print $ part1 inpt
     putStr "Part 2: "
     print $ part2 inpt
